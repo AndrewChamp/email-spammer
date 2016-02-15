@@ -6,7 +6,7 @@ Spam a local or remote form. Remote Execute by firing the file from your server.
 <iframe src="class.spammer.php" height="0' width="0"></iframe>
 ```
 
-### NOTE
+#### Note
 The $spammer->chance(20) variable is a "1 in ?" setting.  If you use "1" then it will execute everytime. The default setting is "1 in 20".  Meaning there's a 5% chance of it running on every execution.
 
 ## Example Usage
