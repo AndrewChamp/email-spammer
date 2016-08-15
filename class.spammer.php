@@ -16,17 +16,18 @@
 	 *	EXAMPLE USAGE:
 	 *
 	 *	$spammer = new spammer('http://domain.com/contact.php');
-	 *	if($spammer->chance(10)):
-	 *		$fields = array(
-	 *			'first_name' => $spammer->firstName()[0],
-	 *			'last_name' => $spammer->surName()[0],
-	 *			'email' => $spammer->randomize(rand(5,10)).'@'.$spammer->randomize(rand(5,10)).$spammer->tld[0],
-	 *			'message' => urlencode('This is a spammy message!'),
-	 *			'submit' => 'send'
-	 *		);
-	 *		$spammer->fields = $fields;
-	 *		$spammer->execute();
-	 *	endif;
+	 *	if(!$spammer->chance(10))
+			exit('Not yet...');
+		
+	 *	$fields = array(
+	 *		'first_name' => $spammer->firstname(),
+	 *		'last_name' => $spammer->surname(),
+	 *		'email' => $spammer->email(),
+	 *		'message' => 'This is a spammy message!',
+	 *		'submit' => 'send'
+	 *	);
+	 *	$spammer->fields = $fields;
+	 *	$spammer->execute();
 	 */
 	
 	class spammer{
@@ -43,8 +44,9 @@
 		
 		
 		public function randomize($length=5){
-			$chars = "abcdefghijklmnopqrstuvwxyz0123456789";	
+			$chars = "abcdefghijklmnopqrstuvwxyz0123456789";
 			$size = strlen($chars);
+			$str = '';
 			for($i = 0; $i < $length; $i++):
 				$str .= $chars[rand(0, $size-1)];
 			endfor;
@@ -52,25 +54,33 @@
 		}
 		
 		
-		public function firstName(){
+		public function firstname(){
 			$firstname = array('Andrea', 'Andrew', 'Angela', 'Brittany', 'Cheryl', 'Dick', 'Emily', 'George', 'Gordon', 'Heather', 'John', 'Josh', 'Mike', 'Mark', 'Matt', 'Nick', 'Nicole', 'Nikki', 'Pam', 'Richard', 'Rick', 'Sally', 'Sam', 'Sarah', 'Scott', 'Shane', 'Tom');
 			shuffle($firstname);
-			return $firstname;
+			return $firstname[0];
 		}
 		
 		
-		public function surName(){
+		public function surname(){
 			$surname = array('Barbetti', 'Burns', 'Crane', 'Feinberg', 'Fisk', 'Griffith', 'Gowen', 'Hobbs', 'Jacobs', 'Jerkins', 'Keller', 'Lundberg', 'Mercer', 'Miller', 'Otteman', 'Sadler', 'Smith', 'Talbott');
 			shuffle($surname);
-			return $surname;
+			return $surname[0];
+		}
+		
+		
+		public function tld(){
+			shuffle($this->tld);
+			return $this->tld[0];
+		}
+		
+		
+		public function email(){
+			return $this->randomize(rand(5,10)).'@'.$this->randomize(rand(5,10)).$this->tld();
 		}
 		
 		
 		public function posts($fields=array()){
-			foreach($fields as $key=>$value):
-				$fields_string .= $key.'='.$value.'&';
-			endforeach;
-			return rtrim($fields_string, '&');
+			return http_build_query($fields);
 		}
 		
 		
@@ -104,7 +114,7 @@
 				'Mozilla/5.0 (Windows; U; MSIE 9.0; WIndows NT 9.0; en-US))'
 			);
 			shuffle($agents);
-			return $agents;
+			return $agents[0];
 		}
 		
 		
@@ -117,9 +127,12 @@
 			curl_setopt($ch, CURLOPT_POST, count($this->fields));
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $this->posts($this->fields));
 			curl_setopt($ch, CURLOPT_VERBOSE, 0);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+			curl_setopt($ch, CURLOPT_ENCODING, '');
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
 			$result = curl_exec($ch);
 			curl_close($ch);
+			#print $result;
 		}
 		
 	}
