@@ -17,8 +17,8 @@
 	 *
 	 *	$spammer = new spammer('http://domain.com/contact.php');
 	 *	if(!$spammer->chance(10))
-			exit('Not yet...');
-		
+	 *		exit('Not yet...');
+	 *	
 	 *	$fields = array(
 	 *		'first_name' => $spammer->firstname(),
 	 *		'last_name' => $spammer->surname(),
