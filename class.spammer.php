@@ -68,6 +68,12 @@
 		}
 		
 		
+		/* Alias of surname(); */
+		public function lastname(){
+			$this->surname();
+		}
+		
+		
 		public function tld(){
 			shuffle($this->tld);
 			return $this->tld[0];
