@@ -55,7 +55,7 @@
 		
 		
 		public function firstname(){
-			$firstname = array('Andrea', 'Andrew', 'Angela', 'Brittany', 'Cheryl', 'Dick', 'Emily', 'George', 'Gordon', 'Heather', 'John', 'Josh', 'Mike', 'Mark', 'Matt', 'Nick', 'Nicole', 'Nikki', 'Pam', 'Richard', 'Rick', 'Sally', 'Sam', 'Sarah', 'Scott', 'Shane', 'Tom');
+			$firstname = array('Andrea', 'Andrew', 'Angela', 'Brandon', 'Brittany', 'Cheryl', 'Dick', 'Emily', 'Eric', 'George', 'Gordon', 'Heather', 'John', 'Josh', 'Mike', 'Mark', 'Matt', 'Nick', 'Nicole', 'Nikki', 'Pam', 'Richard', 'Rick', 'Sally', 'Sam', 'Sarah', 'Scott', 'Shane', 'Tom');
 			shuffle($firstname);
 			return $firstname[0];
 		}
